@@ -1,0 +1,9 @@
+{
+  "family": "JetBrainsMono Nerd Font",
+  "version": "JetBrains Mono 2.304 / Nerd Fonts 3.4.0",
+  "source": "https://github.com/ryanoasis/nerd-fonts/tree/v3.4.0/patched-fonts/JetBrainsMono/Ligatures/Regular",
+  "license": "SIL OFL 1.1; JetBrainsMono-OFL.txt",
+  "files": {
+    "JetBrainsMonoNerdFont-Regular.ttf": "0ec29a68b539ece7078fc714cebff0c0accb2f4948f8f7963d9f5e86633b12d9"
+  }
+}

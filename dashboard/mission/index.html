@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#000603">
+  <title>MOSAIC // Signal terminal</title>
+  <link rel="preload" href="fonts/JetBrainsMonoNerdFont-Regular.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="MOSAIC home">
+      <pre class="wordmark" aria-hidden="true"> __  __   ___   ____    _    ___   ____
+|  \/  | / _ \ / ___|  / \  |_ _| / ___|
+| |\/| || | | |\___ \ / _ \  | | | |
+| |  | || |_| | ___) / ___ \ | | | |___
+|_|  |_| \___/ |____/_/   \_\___| \____|</pre>
+      <span class="brand-caption">AUTONOMOUS PERSONNEL RECOVERY NETWORK</span>
+    </a>
+    <div class="top-meta"><span class="terminal-title">FOLLOW THE SIGNAL<span aria-hidden="true">_</span></span><span class="badge">PX4 + GAZEBO / SOFTWARE SIMULATION</span><span id="link-status" class="link-status" role="status">Connecting</span><time id="clock" aria-label="Mission elapsed time">00:00</time></div>
+  </header>
+  <main class="workspace">
+    <section class="mission-panel" aria-label="Mission control">
+      <div class="mission-heading"><span class="eyebrow">MISSION::01 / F1</span><h1>FIELD OPERATIONS</h1><p>Track everyone through evacuation.</p></div>
+      <ol class="steps" id="steps" aria-label="Mission progress">
+        <li data-step="0"><span>01</span><div>DEPLOY</div></li>
+        <li data-step="1"><span>02</span><div>NETWORK</div></li>
+        <li data-step="2"><span>03</span><div>LOCATE</div></li>
+        <li data-step="3"><span>04</span><div>EVACUATE</div></li>
+        <li data-step="4"><span>05</span><div>RECOVER</div></li>
+      </ol>
+      <div class="mission-controls"><button id="primary-action" class="primary" disabled>Preparing...</button><button id="recall" class="secondary" disabled>Recover fleet</button></div>
+      <div class="phase-line"><span class="prompt" aria-hidden="true">&gt;</span><strong id="phase-label">Starting simulation</strong><span id="phase-description">Connecting flight controllers and onboard sensors.</span></div>
+      <div id="evacuation-status" class="phase-line" role="status" hidden></div>
+    </section>
+    <section class="map-panel" aria-label="Operations map">
+      <div class="map-toolbar"><h2><span class="section-code">[01]</span> OPERATIONS MAP</h2><div class="map-controls"><button id="glow-toggle" class="text-button" aria-pressed="true" aria-label="Phosphor glow">GLOW ON</button><div class="view-switch" role="group" aria-label="Map view"><button id="view-3d" class="selected" aria-pressed="true">3D</button><button id="view-2d" aria-pressed="false">2D</button></div></div></div>
+      <div id="map-container">
+        <canvas id="map" aria-label="Drone and personnel positions"></canvas>
+        <div id="map-error" role="alert" hidden>3D graphics unavailable. Enable WebGL and reload.</div>
+        <div class="map-label north">N ^</div><div class="map-label floor">F1 <span>// TRAINING FACILITY</span></div>
+        <div id="link-banner" class="map-banner" role="status" hidden>LINK LOST / Last-known positions</div>
+        <div id="replay-banner" class="map-banner replay" hidden>HISTORY / Controls locked</div>
+        <div class="map-legend"><span><i class="anchor-key"></i>Anchor</span><span><i class="personnel-key"></i>Personnel</span><span><i class="outline"></i>Uncertainty</span></div>
+        <span class="map-hint">DRAG TO ORBIT / SCROLL TO ZOOM</span>
+      </div>
+      <div class="metrics" aria-label="Mission metrics">
+        <div><span>ACTIVE ANCHORS</span><strong id="anchor-count">0<small>/ 6</small></strong></div>
+        <div><span>CURRENT FIXES</span><strong id="people-count">--<small>/ 3</small></strong></div>
+        <div><span>ONBOARD INFERENCES</span><strong id="inference-count">0</strong></div>
+        <div><span>NODES ON SITE</span><strong id="remaining-count">0</strong></div>
+      </div>
+      <div class="playback"><button id="replay-toggle" class="text-button">[ REPLAY ]</button><input id="replay-range" type="range" min="0" max="0" value="0" aria-label="Replay time" disabled><span id="record-status">[ REC ]</span></div>
+    </section>
+    <aside class="status-panel" aria-label="Personnel and fleet">
+      <div class="section-header"><h2><span class="section-code">[02]</span> OPERATIVES</h2><span class="count">03</span></div>
+      <div id="roster" class="roster"><p class="muted">Connecting to positioning service...</p></div>
+      <div id="person-detail" class="person-detail" hidden></div>
+      <div class="section-header fleet-header"><h2><span class="section-code">[03]</span> FLEET</h2><span class="count">06</span></div>
+      <div id="fleet" class="fleet"></div>
+      <details class="fault-area">
+        <summary><span>FAULT INJECTION</span><span class="details-indicator" aria-hidden="true">[+]</span></summary>
+        <p>Introduce a fault to observe recovery.</p>
+        <div class="fault-buttons"><button id="fault-link">Disconnect link</button><button id="fault-anchor">Disable one anchor</button><button id="fault-radio">Add ranging interference</button><button id="fault-route">Close east passage</button></div>
+      </details>
+      <p class="edge-note"><span class="prompt" aria-hidden="true">&gt;_</span> ONBOARD AUTONOMY<small>Local sensing. Local decisions.</small></p>
+    </aside>
+    <section class="activity-panel" aria-label="Mission event log"><div class="activity-title"><h2><span class="section-code">[04]</span> EVENT LOG</h2><span>LAST 4 ENTRIES</span></div><div id="events" class="events" aria-live="polite"><p>Waiting for simulation...</p></div></section>
+  </main>
+  <footer><span>MOSAIC://FIELD-NET &gt; END OF BUFFER</span><span>ESTIMATED POSITIONS / SOFTWARE SIMULATION / NO PHYSICAL VALIDATION</span></footer>
+  <div id="toast" role="status" hidden></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

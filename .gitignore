@@ -1,0 +1,8 @@
+/build*/
+/dist/
+/.runtime/
+__pycache__/
+*.pyc
+/node_modules/
+.env
+.env.*
